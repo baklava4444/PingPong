@@ -111,7 +111,7 @@ public class GamePanel extends JPanel{
         score = new Score(800,600);
         
         // Start Game Loop Timer
-        timer = new Timer(8, e -> {
+        timer = new Timer(16, e -> {
             if(!isPaused) {
             	checkWinCondition();
             	

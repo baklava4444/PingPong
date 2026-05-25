@@ -1,7 +1,7 @@
 package GamePack;
 
 import java.awt.*;
-
+import java.util.Random;
 
 
 public class Ball {
@@ -10,15 +10,21 @@ public class Ball {
     public double xVelocity;
     public double yVelocity;
     public int diameter;
-    private final int MAX_SPEED = 16;
+    private final int MAX_SPEED = 19;
     private final double ACCELERATION = 0.75;
+    Random random;
+    
     
     public Ball(int x, int y, int diameter) {
         this.x = x;
         this.y = y;
         this.diameter = diameter;
-        xVelocity = -6.0;
-        yVelocity = -6.0;
+        Random random = new Random();
+        int randomNumber1 = random.nextBoolean() ? 1 : -1;
+        int randomNumber2 = random.nextBoolean() ? 1 : -1;
+        
+        xVelocity = 6.0 * randomNumber1;
+        yVelocity = 6.0 * randomNumber2;
     }
     
     public void move() {
@@ -32,8 +38,14 @@ public class Ball {
     	this.x = 400;
     	this.y = 300;
     	this.diameter = 20;
-    	xVelocity = -6.0;
-    	yVelocity = -6.0;
+    	
+    	Random random = new Random();
+    	int randomNumber1 = random.nextBoolean() ? 1 : -1;
+    int randomNumber2 = random.nextBoolean() ? 1 : -1;
+       
+    xVelocity = 6.0 * randomNumber1;
+    yVelocity = 6.0 * randomNumber2;
+       
     }
     public void increaseSpeed() {
         if (Math.abs(xVelocity) < MAX_SPEED) {
