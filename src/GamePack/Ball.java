@@ -3,6 +3,7 @@ package GamePack;
 import java.awt.*;
 
 
+
 public class Ball {
 	public int x;
     public int y;
@@ -10,7 +11,7 @@ public class Ball {
     public double yVelocity;
     public int diameter;
     private final int MAX_SPEED = 16;
-    private final double ACCELERATION = 0.5;
+    private final double ACCELERATION = 0.75;
     
     public Ball(int x, int y, int diameter) {
         this.x = x;
@@ -36,8 +37,8 @@ public class Ball {
     }
     public void increaseSpeed() {
         if (Math.abs(xVelocity) < MAX_SPEED) {
-            xVelocity = (xVelocity + ACCELERATION);
-            yVelocity = (yVelocity + ACCELERATION);
+            xVelocity = xVelocity < 0 ? xVelocity - ACCELERATION : xVelocity + ACCELERATION;
+            yVelocity = yVelocity < 0 ? yVelocity - ACCELERATION : yVelocity + ACCELERATION;
             if (xVelocity == 0) {
                 xVelocity = (xVelocity < 0) ? -1 : 1;
             }

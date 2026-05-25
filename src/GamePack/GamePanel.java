@@ -111,7 +111,7 @@ public class GamePanel extends JPanel{
         score = new Score(800,600);
         
         // Start Game Loop Timer
-        timer = new Timer(16, e -> {
+        timer = new Timer(8, e -> {
             if(!isPaused) {
             	checkWinCondition();
             	
@@ -124,7 +124,7 @@ public class GamePanel extends JPanel{
             	checkOutOfBounds();
             	if(isMultiplayer && netManager.isHost()) {
             			String gamestate = ball.x + "," + ball.y + "," + player1.y + ","
-            					+ player1Score + "," + player2Score;
+            					+ player1Score + "," + player2Score + "," + isPaused;
             			netManager.sendData(gamestate);
             		}     
             	else if(isMultiplayer && !netManager.isHost()) {
@@ -208,11 +208,12 @@ public class GamePanel extends JPanel{
     	if(isHit(p1)) {
     		ball.xVelocity = Math.abs(ball.xVelocity); 
             ball.x = p1.x + p1.width; 
-            System.out.println("velocity :" + ball.xVelocity + " - " + ball.yVelocity);
             ball.increaseSpeed();
+            System.out.println("velocity :" + ball.xVelocity + " - " + ball.yVelocity);
     	}if(isHit(p2)){
     		ball.xVelocity = -Math.abs(ball.xVelocity);                   
             ball.x = p2.x - ball.diameter;
+            ball.increaseSpeed();
             System.out.println("velocity :" + ball.xVelocity + " - " + ball.yVelocity);
     	}
     	else if(ball.getBounds().y <= 0 || ball.getBounds().y >= this.getHeight()){
@@ -239,7 +240,7 @@ public class GamePanel extends JPanel{
     }
     
     private void checkWinCondition() {
-        if (score.player1 >= 5 || score.player2 >= 5) {
+        if (score.player1 >= 10 || score.player2 >= 10) {
             GAME_OVER = true;
             isPaused = true;
             toggleButtons(true);
@@ -316,6 +317,8 @@ public class MyKeyAdapter extends KeyAdapter {
 	        player1.y = Integer.parseInt(tokens[2]);
 	        player1Score = Integer.parseInt(tokens[3]);
 	        player2Score = Integer.parseInt(tokens[4]);
+	        isPaused = Boolean.parseBoolean(tokens[5]);
+	        toggleButtons(isPaused);
 	    }
 	    
 	    repaint(); // Force UI refresh to show the new positions!
